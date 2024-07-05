@@ -5,7 +5,6 @@ function DFSRecursive(adj, currentNode, visited, recursiveStack) {
     console.log(currentNode)
     for(let j = 0; j < adj[currentNode].length; j++) {
         let adjNode = adj[currentNode][j]
-        console.log(adjNode)
         if (visited[adjNode] == false && DFSRecursive(adj, adjNode, visited, recursiveStack) == true) {
             return true
         } else if (recursiveStack[adjNode] == true) {
