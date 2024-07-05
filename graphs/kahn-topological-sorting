@@ -1,0 +1,21 @@
+let adj = [[2, 3], [3, 4], [3], [], []]
+function topologicalSorting(adj) {
+    let indegreeArray = new Array(adj.length).fill(0, 0, adj.length),
+        queue = []
+    for (let i = 0; i < adj.length; i++) {
+        for (let j = 0; j < adj[i].length; j++) {
+            indegreeArray[adj[i][j]] += 1
+        }
+    }
+    indegreeArray.forEach((e, i) => { if (e == 0) queue.push(i) })
+    while (queue.length != 0) {
+        let currentNode = queue.splice(0, 1)
+        console.log(currentNode)
+        for (let k = 0; k < adj[currentNode].length; k++) {
+            let adjNode = adj[currentNode][k]
+            indegreeArray[adjNode]--
+            if (indegreeArray[adjNode] == 0) queue.push(adjNode)
+        }
+    }
+}
+topologicalSorting(adj)
