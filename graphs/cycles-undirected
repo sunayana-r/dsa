@@ -2,9 +2,10 @@ let adj = [[1], [0, 2, 3], [1, 3, 4], [1, 2], [2, 5], [4]]
 function DFSRecursive(adj, currentNode, visited, parent) {
     visited[currentNode] = true
     for(let j = 0; j < adj[currentNode].length; j++) {
-        if (visited[j] == false) {
-            if (DFSRecursive(adj, j, visited, currentNode) == true) return true
-        } else if (j != parent) {
+        let adjacentNode = adj[currentNode][j]
+        if (visited[adjacentNode] == false) {
+            if (DFSRecursive(adj, adjacentNode, visited, currentNode) == true) return true
+        } else if (adjacentNode != parent) {
             return true
         }
     }
