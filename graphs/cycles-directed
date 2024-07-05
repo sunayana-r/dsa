@@ -1,0 +1,29 @@
+let adj = [[1],[2], [3], []]
+function DFSRecursive(adj, currentNode, visited, recursiveStack) {
+    visited[currentNode] = true
+    recursiveStack[currentNode] = true
+    console.log(currentNode)
+    for(let j = 0; j < adj[currentNode].length; j++) {
+        let adjNode = adj[currentNode][j]
+        console.log(adjNode)
+        if (visited[adjNode] == false && DFSRecursive(adj, adjNode, visited, recursiveStack) == true) {
+            return true
+        } else if (recursiveStack[adjNode] == true) {
+            return true
+        }
+    }
+    recursiveStack[currentNode] = false
+    return false
+}
+
+function checkForCycles(adj) {
+    let visited = new Array(adj.length).fill(false, 0, adj.length),
+        recursiveStack = new Array(adj.length).fill(false, 0, adj.length)
+    for (let i = 0; i < adj.length; i++) {
+        if(visited[i] == false) {
+            if (DFSRecursive(adj, i, visited, recursiveStack) == true) return true
+        }
+    }
+    return false
+}
+console.log(checkForCycles(adj))
