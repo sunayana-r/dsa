@@ -1,0 +1,31 @@
+let graph = [[0, 5, 10, 0, 0],
+[5, 0, 4, 25, 0],
+[10, 4, 0, 0, 10],
+[0, 25, 0, 0, 9],
+[0, 0, 10, 9, 0]];
+
+function dijkstrasAlgorithm(graph, source, numOfNodes) {
+    let distances = new Array(numOfNodes).fill(Number.MAX_VALUE),
+        visitedNodes = new Array(numOfNodes).fill(false)
+    
+    distances[source] = 0
+    for (let currentNode = 0; currentNode < numOfNodes - 1; currentNode++) {
+        let minimumDistanceNode = -1
+        for (let node = 0; node < numOfNodes; node++) {
+            if (!visitedNodes[node] && (minimumDistanceNode == -1 || distances[node] < distances[minimumDistanceNode])) {
+                minimumDistanceNode = node
+            }
+        }
+        
+        visitedNodes[minimumDistanceNode] = true
+        
+        for (let adjacentNode = 0; adjacentNode < numOfNodes; adjacentNode++) {
+            if (!visitedNodes[adjacentNode] && graph[minimumDistanceNode][adjacentNode] != 0) {
+                distances[adjacentNode] = Math.min(distances[adjacentNode], graph[minimumDistanceNode][adjacentNode] + distances[minimumDistanceNode])
+            }
+        }
+    }
+    return distances
+}
+
+console.log(dijkstrasAlgorithm(graph, 4, 5))
