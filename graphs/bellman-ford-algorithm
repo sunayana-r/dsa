@@ -1,0 +1,36 @@
+function convertToEdgeList(graph) {
+    let edges = [];
+    for (let u = 0; u < graph.length; u++) {
+        for (let v = 0; v < graph[u].length; v++) {
+            if (graph[u][v] != 0) {
+                edges.push([u, v, graph[u][v]]);
+            }
+        }
+    }
+    return edges;
+}
+
+function bellmanFordAlgorithm(graph, source) {
+    let numOfNodes = graph.length;
+    let edges = convertToEdgeList(graph);
+    let distance = new Array(numOfNodes).fill(Infinity);
+    distance[source] = 0;
+
+    // Iterate numOfNodes-1 times to relax all edges
+    for (let i = 0; i < numOfNodes - 1; i++) {
+        let updated = false;
+        for (let [u, v, w] of edges) {
+            if (distance[u] != Infinity && distance[v] > distance[u] + w) {
+                distance[v] = distance[u] + w;
+                updated = true;
+            }
+        }
+        // If no distance was updated, exit early
+        if (!updated) break;
+    }
+
+    return distance;
+}
+
+let graph = [[0, -1, 4, 0, 0], [0, 0, 3, 2, 2], [0, 0, 0, 0, 0], [0, 1, 0, 0, 0], [0, 0, 0, -3, 0]];
+console.log(bellmanFordAlgorithm(graph, 0)); // Expected output: [0, -1, 2, -2, 1]
